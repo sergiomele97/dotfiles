@@ -1,0 +1,19 @@
+export EDITOR="nvim"
+export VISUAL="nvim"
+# Alias inteligente con Sidebar en NANO (Limpio y sin barras de ayuda)
+alias tm="tmux attach-session -t principal || tmux new-session -s principal \; split-window -h -l 30 'nano -xtc ~/tmux_csheet.md' \; select-pane -t 0"
+
+# Navegación rápida
+alias y="yazi"
+alias ..="cd .."
+alias dot="cd ~/work/dotfile"
+
+# Función Yazi para salir en el directorio actual
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}

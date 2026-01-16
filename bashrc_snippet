@@ -2,11 +2,13 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 
 # Alias original + Ventana 2 corregida (usando -l para evitar el error de size)
-alias tm="tmux attach-session -t principal || tmux new-session -s principal \; split-window -h -l 30 'nano -xtc ~/tmux_csheet.md' \; select-pane -t 0 \; new-window -n 'RISC-V' \; split-window -h \; select-pane -t 1 \; split-window -v -l 12 'nano -xtc ~/work/dotfile/qemu_csheet.md' \; select-window -t 0"
+alias tm="tmux attach-session -t principal || tmux new-session -s principal \; split-window -h -l 30 'nano -xtc ~/tmux_csheet.md' \; select-pane -t 0 \; new-window -n 'RISC-V' \; split-window -h \; select-pane -t 1 \; split-window -v -l 6 'nano -xtc ~/work/dotfile/qemu_csheet.md' \; select-window -t 0"
 
 # Navegación rápida
 alias ..="cd .."
 alias dot="cd ~/work/dotfile"
+# Alias para depurar el proyecto de RISC-V
+alias gdbr='gdb-multiarch kernel.elf -ex "target remote :1234" -ex "layout asm" -ex "layout regs" -ex "break _start" -ex "continue"'
 
 # Función Yazi
 unalias y 2>/dev/null

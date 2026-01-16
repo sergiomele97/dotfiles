@@ -9,7 +9,6 @@
 
 # Neovim insert (i)
 
-
 ## Paneles
 - Ctrl+a + |
 - Ctrl+a + - 
@@ -32,6 +31,11 @@
 - Copy/paste/cut: y/p/x
 - Filtrar: f
 - Ocultos: .
+
+# Reset tmux
+1. Ctrl+a + d
+2. temux kill-server
+3. source ~/.bashrc
 
 
 Nano: ctrl+o enter ctrl+x

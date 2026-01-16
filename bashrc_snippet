@@ -1,17 +1,15 @@
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-# Alias inteligente con Sidebar en NANO (Limpio y sin barras de ayuda)
-alias tm="tmux attach-session -t principal || tmux new-session -s principal \; split-window -h -l 30 'nano -xtc ~/tmux_csheet.md' \; select-pane -t 0"
+# Alias original + Ventana 2 corregida (usando -l para evitar el error de size)
+alias tm="tmux attach-session -t principal || tmux new-session -s principal \; split-window -h -l 30 'nano -xtc ~/tmux_csheet.md' \; select-pane -t 0 \; new-window -n 'RISC-V' \; split-window -h \; select-pane -t 1 \; split-window -v -l 12 'nano -xtc ~/work/dotfile/qemu_csheet.md' \; select-window -t 0"
 
 # Navegación rápida
 alias ..="cd .."
 alias dot="cd ~/work/dotfile"
 
-# Eliminamos cualquier alias previo de 'y' para que la función tenga prioridad
+# Función Yazi
 unalias y 2>/dev/null
-
-# Función Yazi para salir en el directorio actual (Se invoca con 'y')
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"

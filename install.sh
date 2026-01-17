@@ -71,7 +71,6 @@ sed -i '/# SERGIO_DOTFILES/,/# END_SERGIO/d' ~/.bashrc
 
 cat << EOF >> ~/.bashrc
 # SERGIO_DOTFILES
-export EDITOR="nvim"
 export DOTFILES_DIR="$DOTFILES_DIR"
 source "\$DOTFILES_DIR/bashrc_snippet"
 # END_SERGIO

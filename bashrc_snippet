@@ -3,7 +3,7 @@ export VISUAL="nvim"
 
 # Alias original + Ventana 2 corregida (usando -l para evitar el error de size)
 # Alias original + Ventana 2 corregida
-alias tm="tmux attach-session -t principal || tmux new-session -s principal \; split-window -h -l 30 'nano -xtc ~/tmux_csheet.md' \; select-pane -t 0 \; new-window -n 'RISC-V' \; split-window -h \; select-pane -t 1 \; split-window -v -l 6 \"nano -xtc \$DOTFILES_DIR/qemu_csheet.md\" \; select-window -t 0"
+alias tm="tmux attach-session -t principal || tmux new-session -s principal -n '🏠 Principal' \; split-window -h -l 30 'nano -xtc ~/tmux_csheet.md' \; select-pane -t 0 \; new-window -n '💻 Dev' \; new-window -n '🚀 RISC-V' \; split-window -h \; select-pane -t 1 \; split-window -v -l 6 \"nano -xtc \$DOTFILES_DIR/qemu_csheet.md\" \; select-window -t 0"
 
 # Navegación rápida
 alias ..="cd .."

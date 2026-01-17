@@ -8,8 +8,21 @@ echo "🚀 Iniciando instalación de Dotfiles de Sergio..."
 # --- 📦 INSTALACIÓN DE PAQUETES ---
 echo "📦 Actualizando sistema e instalando dependencias..."
 sudo apt update && sudo apt install -y \
-    git curl tmux neovim build-essential nano unzip \
+    git curl tmux build-essential nano unzip \
     ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide
+
+# Neovim 0.11+ (Required by LazyVim)
+if ! command -v nvim &> /dev/null || [[ $(nvim --version | head -n 1 | cut -d 'v' -f 2) < "0.11" ]]; then
+    echo "📥 Instalando Neovim 0.11+ en ~/.local/nvim..."
+    NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
+    curl -L -o /tmp/nvim.tar.gz "$NVIM_URL"
+    rm -rf ~/.local/nvim
+    mkdir -p ~/.local/nvim
+    tar -xzf /tmp/nvim.tar.gz -C ~/.local/nvim --strip-components=1
+    mkdir -p ~/.local/bin
+    ln -sf ~/.local/nvim/bin/nvim ~/.local/bin/nvim
+    rm /tmp/nvim.tar.gz
+fi
 
 # Yazi (Terminal File Manager)
 if ! command -v yazi &> /dev/null; then
@@ -38,18 +51,18 @@ echo "🔗 Creando enlaces simbólicos..."
 ln_sf() {
     local src=$1
     local dest=$2
-    if [ -L "$dest" ] || [ -e "$dest" ]; then
-        echo "⚠️ $dest ya existe, omitiendo..."
-    else
-        ln -sf "$src" "$dest"
-        echo "✅ Enlazado: $dest"
+    if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+        echo "📦 Haciendo copia de seguridad de $dest..."
+        mv "$dest" "${dest}.bak_$(date +%Y%m%d_%H%M%S)"
     fi
+    ln -sf "$src" "$dest"
+    echo "✅ Enlazado: $dest"
 }
 
 ln_sf "$DOTFILES_DIR/tmux.conf" ~/.tmux.conf
 ln_sf "$DOTFILES_DIR/tmux_csheet.md" ~/tmux_csheet.md
 ln_sf "$DOTFILES_DIR/yazi/yazi.toml" ~/.config/yazi/yazi.toml
-ln_sf "$DOTFILES_DIR/nvim/init.lua" ~/.config/nvim/init.lua
+ln_sf "$DOTFILES_DIR/nvim" ~/.config/nvim
 
 # --- 🏠 CONFIGURACIÓN BASH ---
 echo "🏠 Configurando .bashrc..."
